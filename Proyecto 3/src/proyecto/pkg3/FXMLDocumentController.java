@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import model.Cliente;
 
 /**
  *
@@ -23,8 +24,9 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private void handleButtonAction(ActionEvent event) {
+        Cliente x = new Cliente (53637,"Juan", "48933");
         System.out.println("You clicked me!");
-        label.setText("Hello World!");
+        label.setText(x.getNombreCompleto());
     }
     
     @Override
