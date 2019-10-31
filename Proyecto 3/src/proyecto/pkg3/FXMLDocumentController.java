@@ -22,20 +22,25 @@ import model.Cliente;
 public class FXMLDocumentController implements Initializable {
     
     private ControlAgencia controlador = new ControlAgencia();
-    //hhhhhhhh
-    @FXML
-    private Label label;
-      @FXML
-    private TableView<Cliente> nombre;
+    
+    
+   
 
     
     @FXML
     private void handleButtonAction(ActionEvent event) {
-        Cliente x = new Cliente (53637,"Juan", "48933");
-        System.out.println("You clicked me!");
-        label.setText(x.getNombreCompleto());
+        
     }
+    @FXML
+    private void handleButtonTour(ActionEvent event) {
+        
+    }
+      @FXML
+    private void handleButtonCliente(ActionEvent event) {
+        
+    }   
     
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

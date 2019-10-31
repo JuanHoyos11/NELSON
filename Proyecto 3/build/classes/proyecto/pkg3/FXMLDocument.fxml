@@ -4,9 +4,9 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="470.0" prefWidth="598.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="proyecto.pkg3.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="470.0" prefWidth="598.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.pkg3.FXMLDocumentController">
    <children>
-      <TabPane layoutY="-2.0" prefHeight="71.0" prefWidth="598.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutY="-2.0" prefHeight="470.0" prefWidth="598.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Tour" />
           <Tab text="Clientes" />
