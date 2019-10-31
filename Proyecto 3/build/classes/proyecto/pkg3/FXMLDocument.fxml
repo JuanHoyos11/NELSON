@@ -2,17 +2,56 @@
 
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="470.0" prefWidth="598.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.pkg3.FXMLDocumentController">
-   <children>
-      <TabPane layoutY="-2.0" prefHeight="470.0" prefWidth="598.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab text="Tour" />
-          <Tab text="Clientes" />
-            <Tab text="Reservas" />
-            <Tab text="Reportes" />
-        </tabs>
-      </TabPane>
-   </children>
+<AnchorPane id="AnchorPane" prefHeight="938.0" prefWidth="1334.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.pkg3.FXMLDocumentController">
+    <children>
+        <TabPane layoutX="14.0" layoutY="-1.0" prefHeight="946.0" prefWidth="1380.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Tour">
+                    <content>
+                        <AnchorPane prefHeight="910.0" prefWidth="1343.0">
+                            <children>
+                                <TableView fx:id="tablaTours" layoutX="419.0" layoutY="14.0" prefHeight="550.0" prefWidth="947.0">
+                                    <columns>
+                                        <TableColumn fx:id="columnaNombre" prefWidth="225.0" text="Nombre">
+                                            <cellValueFactory>
+                                                <javafx.scene.control.cell.PropertyValueFactory property="NombreComercial" />
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn fx:id="columnaID" prefWidth="185.0" text="ID">
+                                            <cellValueFactory>
+                                                <javafx.scene.control.cell.PropertyValueFactory property="CodigoIdentificacion" />
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn fx:id="columnaPartida" prefWidth="218.0" text="Lugar Partida">
+                                            <cellValueFactory>
+                                                <javafx.scene.control.cell.PropertyValueFactory property="LugarPartita" />
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn fx:id="columnaHora" prefWidth="146.0" text="Hora Partida">
+                                            <cellValueFactory>
+                                                <javafx.scene.control.cell.PropertyValueFactory property="HoraPartida" />
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn fx:id="columnaPrecio" minWidth="0.0" prefWidth="168.0" text="Precio">
+                                            <cellValueFactory>
+                                                <javafx.scene.control.cell.PropertyValueFactory property="Precio" />
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Clientes" />
+                <Tab text="Reservas" />
+                <Tab text="Reportes" />
+            </tabs>
+        </TabPane>
+    </children>
 </AnchorPane>

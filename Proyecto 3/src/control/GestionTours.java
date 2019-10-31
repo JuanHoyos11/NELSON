@@ -38,8 +38,8 @@ public class GestionTours {
                 HashMap <Integer,Tour> listaTours = new HashMap<Integer, Tour>();
                 
                 
-                Tour tour1 = new Tour(1001, "Paraiso Travel", "Medellin", "5:00", 100.0, fechaSalida1, fechaLlegada1);
-                Tour tour2 = new Tour(1002, "Adventure Time", "Bogota", "22:00", 300.0, fechaSalida2, fechaLlegada2);
+                Tour tour1 = new Tour(1000001, "Paraiso Travel", "Medellin", "5:00", 100.0, fechaSalida1, fechaLlegada1);
+                Tour tour2 = new Tour(1000002, "Adventure Time", "Bogota", "22:00", 300.0, fechaSalida2, fechaLlegada2);
                 Ecologico tourEco1 = new Ecologico(true ,20.0 ,true ,2001, "Trip verde", "Ibague", "5:00", 400.0, fechaSalida3, fechaLlegada3);
                 Ecologico tourEco2 = new Ecologico(true, 20.0, false,2002, "Fumaratto", "Honda", "0:00", 100.0, fechaSalida4, fechaLlegada4);
                 Empresarial tourEmp1 = new Empresarial("Tiobe", true, TipoEmpresa.TECNOLOGIA, 3001, "Wall Street Paisa", "Cartagena", "23:00", 500.0, fechaSalida5, fechaLlegada5);
