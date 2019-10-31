@@ -11,9 +11,11 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import model.Cliente;
 
 /**
@@ -37,6 +39,18 @@ public class FXMLDocumentController implements Initializable {
     private TableColumn<Cliente, String> columnaTelefono  = new TableColumn<Cliente, String>("TelefonoContacto");
     
     @FXML
+    private TextField newNombre;
+
+    @FXML
+    private TextField newCedula;
+
+    @FXML
+    private TextField newTelefono;
+
+    @FXML
+    private Button agregarBtn;
+    
+    @FXML
     private void handleButtonAction(ActionEvent event) {
         
     }
@@ -48,7 +62,27 @@ public class FXMLDocumentController implements Initializable {
     private void handleButtonCliente(ActionEvent event) {
         
     }   
-    
+    @FXML
+  void agregarNuevoCliente(ActionEvent event) throws Exception{
+      long num = Long.valueOf(newCedula.getText());
+      Cliente cln = new Cliente(num, newNombre.getText(),newTelefono.getText());
+      if( controlador.getGestionCliente().getCliente(num, controlador.getListaClientes()) == null){
+          controlador.getGestionCliente().insertarCliente(cln, controlador.getListaClientes());
+          //Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+          //alert.setTitle("Exito");
+          //alert.setHeaderText("El cliente ha sido agregado correctamente");
+          //alert.setContentText("En el sistema hay "+controlador.getClientes().size()+" clientes.");
+          //alert.showAndWait();
+          clearItems();
+          fillItemsClientes();
+      } else {
+          //Alert alert = new Alert(Alert.AlertType.ERROR);
+          //alert.setTitle("Error");
+          //alert.setHeaderText("Error de al agregar un nuevo Cliente:");
+          //alert.setContentText("El cliente ya existe.");
+          //alert.showAndWait();
+      }
+  }
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {    
@@ -66,6 +100,11 @@ public class FXMLDocumentController implements Initializable {
             
             
         }
+    }
+    
+     private void clearItems() {
+        
+        tabla.getItems().clear();
     }
     
     }
