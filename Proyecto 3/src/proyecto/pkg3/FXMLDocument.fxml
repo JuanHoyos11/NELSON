@@ -2,17 +2,48 @@
 
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane id="AnchorPane" prefHeight="470.0" prefWidth="598.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.pkg3.FXMLDocumentController">
-   <children>
-      <TabPane layoutY="-2.0" prefHeight="470.0" prefWidth="598.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab text="Tour" />
-          <Tab text="Clientes" />
-            <Tab text="Reservas" />
-            <Tab text="Reportes" />
-        </tabs>
-      </TabPane>
-   </children>
+    <children>
+        <TabPane layoutY="-2.0" prefHeight="470.0" prefWidth="598.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Tour" />
+                <Tab text="Clientes">
+                    <content>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                            <children>
+                                <TableView fx:id="tabla" prefHeight="206.0" prefWidth="300.0">
+                                    <columns>
+                                        <TableColumn fx:id="nombreColumna" prefWidth="109.0" text="Nombre">
+                                            <cellValueFactory>
+                                                <javafx.scene.control.cell.PropertyValueFactory property="NombreCompleto" />
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                     
+                                        <TableColumn fx:id="cedulaColumnas" prefWidth="114.0" text="Cedula">
+                                            <cellValueFactory>
+                                                <javafx.scene.control.cell.PropertyValueFactory property="NumeroIdentificacion" />
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        
+                                        <TableColumn fx:id="columnaTelefono" prefWidth="75.0" text="Telefono">
+                                            <cellValueFactory>
+                                                <javafx.scene.control.cell.PropertyValueFactory property="TelefonoContacto" />
+                                            </cellValueFactory>
+                                        </TableColumn> 
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Reservas" />
+                <Tab text="Reportes" />
+            </tabs>
+        </TabPane>
+    </children>
 </AnchorPane>
