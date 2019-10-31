@@ -5,12 +5,14 @@
  */
 package proyecto.pkg3;
 
+import control.ControlAgencia;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 import model.Cliente;
 
 /**
@@ -19,8 +21,13 @@ import model.Cliente;
  */
 public class FXMLDocumentController implements Initializable {
     
+    private ControlAgencia controlador = new ControlAgencia();
+    
     @FXML
     private Label label;
+      @FXML
+    private TableView<Cliente> nombre;
+
     
     @FXML
     private void handleButtonAction(ActionEvent event) {
