@@ -242,7 +242,7 @@ public class PantallaAgencia {
 	}
 
 
-	public static void modificarTour() {
+            public static void modificarTour() {
 
 		Tour tourMod = new Tour();
 		Scanner sc = new Scanner(System.in);

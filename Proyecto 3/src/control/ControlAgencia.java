@@ -6,6 +6,7 @@ import model.ServicioAdicional;
 import model.Tour;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -310,6 +311,7 @@ public class ControlAgencia {
 			reservas.get(index).setPagado(true);
 		}
 	}
+        
         
         //METODOS DE LA SEGUNDA ENTREGA (interaccion de objetos)
         
