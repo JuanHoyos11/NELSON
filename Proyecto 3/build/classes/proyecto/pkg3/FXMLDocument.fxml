@@ -17,9 +17,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="1024.0" prefWidth="1670.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.pkg3.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="1022.0" prefWidth="1815.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.pkg3.FXMLDocumentController">
     <children>
-        <TabPane layoutX="14.0" layoutY="-1.0" prefHeight="1027.0" prefWidth="1656.0" tabClosingPolicy="UNAVAILABLE">
+        <TabPane layoutX="14.0" layoutY="-1.0" prefHeight="1023.0" prefWidth="1810.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
                 <Tab text="Tour">
                     <content>
@@ -30,7 +30,7 @@
                                         <Font size="30.0" />
                                     </font>
                                 </Label>
-                                <TableView fx:id="tablaTours" layoutX="419.0" layoutY="14.0" prefHeight="555.0" prefWidth="1232.0">
+                                <TableView fx:id="tablaTours" layoutX="419.0" layoutY="14.0" prefHeight="560.0" prefWidth="1385.0">
                                     <columns>
                                         <TableColumn fx:id="columnaNombre" prefWidth="225.0" text="Nombre">
                                             <cellValueFactory>
@@ -62,6 +62,11 @@
                                                 <javafx.scene.control.cell.PropertyValueFactory property="FechaRegreso" />
                                             </cellValueFactory>
                                         </TableColumn>
+                                        <TableColumn fx:id="columnaHoraPartida" prefWidth="150.6666259765625" text="Hora de partida" >
+                                            <cellValueFactory>
+                                                <javafx.scene.control.cell.PropertyValueFactory property="HoraPartida" />
+                                            </cellValueFactory>
+                                        </TableColumn>
                                     </columns>
                                 </TableView>
                                 <TextField fx:id="newNombreTour" layoutX="113.0" layoutY="93.0" promptText="Nombre" />
@@ -70,7 +75,8 @@
                                 <TextField fx:id="newFechaDeSalidaTour" layoutX="113.0" layoutY="237.0" promptText="Fecha de partida" />
                                 <TextField fx:id="newFechaDeRegresoTour" layoutX="113.0" layoutY="276.0" promptText="Fecha de regreso" />
                                 <TextField fx:id="newPrecioTour" layoutX="113.0" layoutY="319.0" promptText="Precio" />
-                                <Group layoutX="38.0" layoutY="377.0">
+                                <TextField fx:id="newHoraPartida" layoutX="113.0" layoutY="362.0" promptText="Hora de partida" />
+                                <Group layoutX="34.0" layoutY="410.0">
                                     <children>
                                         <RadioButton fx:id="tour_RadioButton" mnemonicParsing="false" selected="true" text="Tour">
                                             <toggleGroup>
@@ -99,41 +105,46 @@
                                 <Label alignment="CENTER" layoutX="232.0" layoutY="465.0" opacity="0.69" prefHeight="32.0" prefWidth="167.0" text="Tour empresarial" />
                                 <Separator layoutX="217.0" layoutY="464.0" orientation="VERTICAL" prefHeight="279.0" prefWidth="9.0" />
                                 <Separator layoutX="-6.0" layoutY="460.0" prefHeight="9.0" prefWidth="420.0" />
-                        <Separator layoutX="27.0" layoutY="738.0" prefHeight="0.0" prefWidth="392.0" />
-                        <ChoiceBox fx:id="eliminar_ChoiceBox" layoutX="87.0" layoutY="839.0" prefHeight="31.0" prefWidth="273.0" />
-                        <Label alignment="CENTER" layoutX="96.0" layoutY="771.0" prefHeight="49.0" prefWidth="227.0" text="Eliminar Tour">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                        </Label>
-                        <Button fx:id="eliminar_BUTTON" layoutX="255.0" layoutY="920.0" mnemonicParsing="false" onAction="#eliminiarTour" prefHeight="43.0" prefWidth="118.0" text="Eliminar" />
-                        <Separator layoutX="416.0" layoutY="605.0" orientation="VERTICAL" prefHeight="381.0" prefWidth="7.0" />
-                        <Group layoutX="459.0" layoutY="676.0">
-                           <children>
-                              <RadioButton fx:id="nombreMod_RADIOBUTTON" layoutY="2.0" mnemonicParsing="false" selected="true" text="Nombre">
-                                 <toggleGroup>
-                                    <ToggleGroup fx:id="grupoModificar" />
-                                 </toggleGroup>
-                              </RadioButton>
-                              <RadioButton fx:id="idMod_RADIOBUTTON" layoutX="165.0" layoutY="1.0" mnemonicParsing="false" text="ID" toggleGroup="$grupoModificar" />
-                              <RadioButton fx:id="lugarMod_RADIOBUTTON" layoutX="329.0" mnemonicParsing="false" text="Lugar de partida" toggleGroup="$grupoModificar" />
-                              <RadioButton fx:id="precioMod_RADIOBUTTON" layoutX="479.0" mnemonicParsing="false" text="Precio" toggleGroup="$grupoModificar" />
-                              <RadioButton fx:id="fechaPMod_RADIOBUTTON" layoutX="633.0" layoutY="3.0" mnemonicParsing="false" text="Fecha de partida" toggleGroup="$grupoModificar" />
-                              <RadioButton fx:id="fechaRMod_RADIOBUTTON" layoutX="776.0" layoutY="4.0" mnemonicParsing="false" text="Fecha de regreso" toggleGroup="$grupoModificar" />
-                              <RadioButton fx:id="horaMod_RADIOBUTTON" layoutX="927.0" layoutY="3.0" mnemonicParsing="false" text="Hora de partida" toggleGroup="$grupoModificar" />
-                              <RadioButton fx:id="impuestoMod_RADIOBUTTON" layoutY="56.0" mnemonicParsing="false" text="Impuesto local" toggleGroup="$grupoModificar" />
-                              <RadioButton fx:id="nombreEmpresaMod_RADIOBUTTON" layoutX="176.0" layoutY="56.0" mnemonicParsing="false" text="nombre de empresa " toggleGroup="$grupoModificar" />
-                           </children>
-                        </Group>
-                        <Label alignment="CENTER" layoutX="457.0" layoutY="589.0" prefHeight="45.0" prefWidth="325.0" text="Modificar Tour">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="modificar_TEXTFIELD" layoutX="507.0" layoutY="798.0" promptText="Modificar" />
-                        <Button fx:id="modificar_BUTTON" alignment="CENTER" layoutX="824.0" layoutY="798.0" mnemonicParsing="false" onAction="#modificarTour" prefHeight="53.0" prefWidth="150.0" text="Modificar" />
-                        <ChoiceBox fx:id="modificarTour_CHOICEBOX" layoutX="1191.0" layoutY="775.0" prefWidth="150.0" />
-                        <CheckBox fx:id="eliminar_CHECKBOX" layoutX="105.0" layoutY="886.0" mnemonicParsing="false" text="Seguro lo desea eliminar?" />
+                                <Separator layoutX="27.0" layoutY="738.0" prefHeight="0.0" prefWidth="392.0" />
+                                <ChoiceBox fx:id="eliminar_ChoiceBox" layoutX="87.0" layoutY="839.0" prefHeight="31.0" prefWidth="273.0" />
+                                <Label alignment="CENTER" layoutX="96.0" layoutY="771.0" prefHeight="49.0" prefWidth="227.0" text="Eliminar Tour">
+                                    <font>
+                                        <Font size="30.0" />
+                                    </font>
+                                </Label>
+                                <Button fx:id="eliminar_BUTTON" layoutX="255.0" layoutY="920.0" mnemonicParsing="false" onAction="#eliminiarTour" prefHeight="43.0" prefWidth="118.0" text="Eliminar" />
+                                <Separator layoutX="416.0" layoutY="605.0" orientation="VERTICAL" prefHeight="381.0" prefWidth="7.0" />
+                                <Label alignment="CENTER" layoutX="457.0" layoutY="589.0" prefHeight="45.0" prefWidth="325.0" text="Modificar Tour">
+                                    <font>
+                                        <Font size="30.0" />
+                                    </font>
+                                </Label>
+                                <TextField fx:id="modificar_TEXTFIELD" layoutX="1320.0" layoutY="658.0" promptText="Modificar" />
+                                <Button fx:id="modificar_BUTTON" alignment="CENTER" layoutX="1306.0" layoutY="715.0" mnemonicParsing="false" onAction="#modificarTour" prefHeight="53.0" prefWidth="150.0" text="Modificar" />
+                                <ChoiceBox fx:id="modificarTour_CHOICEBOX" layoutX="704.0" layoutY="673.0" prefWidth="150.0" />
+                                <CheckBox fx:id="eliminar_CHECKBOX" layoutX="105.0" layoutY="886.0" mnemonicParsing="false" text="Seguro lo desea eliminar?" />
+                                <ChoiceBox fx:id="modificarValor_CHECKBOX" layoutX="702.0" layoutY="780.0" prefWidth="150.0" />
+                                <Label layoutX="498.0" layoutY="666.0" prefHeight="36.0" prefWidth="132.0" text="Tour">
+                                    <font>
+                                        <Font size="30.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="430.0" layoutY="759.0" prefHeight="60.0" prefWidth="223.0" text="Que modificar ">
+                                    <font>
+                                        <Font size="30.0" />
+                                    </font>
+                                </Label>
+                                <Group layoutX="982.0" layoutY="664.0">
+                                    <children>
+                                        <RadioButton fx:id="modificarTec_RADIOBUTTON" layoutX="1.0" mnemonicParsing="false" selected="true" text="Tecnologico">
+                                            <toggleGroup>
+                                                <ToggleGroup fx:id="grupoModificar" />
+                                            </toggleGroup>
+                                        </RadioButton>
+                                        <RadioButton fx:id="modificarTur_RADIOBUTTON" layoutX="2.0" layoutY="66.0" mnemonicParsing="false" text="Turismo" toggleGroup="$grupoModificar" />
+                                        <RadioButton fx:id="modificarMedio_RADIOBUTTON" layoutY="124.0" mnemonicParsing="false" text="Medio de comunicacion" toggleGroup="$grupoModificar" />
+                                    </children>
+                                </Group>
                             </children>
                         </AnchorPane>
                     </content>
