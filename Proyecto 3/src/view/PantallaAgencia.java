@@ -556,7 +556,8 @@ public class PantallaAgencia {
                 {  
 			fechaReserva = agencia.solicitarFecha();
 			//validar que no exista una reserva y que la fecha sea despues de pasado ma�ana
-			while(agencia.existeReserva(fechaReserva, cliente.getNumeroIdentificacion(), tour.getCodigoIdentificacion()) || (agencia.reservaMenorADosDias(fechaReserva))) 
+			while(agencia.existeReserva(fechaReserva, cliente.getNumeroIdentificacion(), tour.getCodigoIdentificacion())
+                                || (agencia.reservaMenorADosDias(fechaReserva))) 
                         {
 				System.out.println("ERROR! La fecha ya esta reservada y/o No se puede reservar un tour con menos de dos dias de antelacion a la fecha de la reserva");
 				fechaReserva = agencia.solicitarFecha();

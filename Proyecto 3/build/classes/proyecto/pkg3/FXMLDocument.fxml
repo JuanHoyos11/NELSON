@@ -32,7 +32,7 @@
                                         <Font size="30.0" />
                                     </font>
                                 </Label>
-                                <TableView fx:id="tablaTours" layoutX="438.0" layoutY="12.0" prefHeight="555.0" prefWidth="662.0">
+                                <TableView fx:id="tablaTours" layoutX="438.0" layoutY="12.0" prefHeight="566.0" prefWidth="662.0">
                                     <columns>
                                         <TableColumn fx:id="columnaNombre" prefWidth="225.0" text="Nombre">
                                             <cellValueFactory>

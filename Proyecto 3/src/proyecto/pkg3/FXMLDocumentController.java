@@ -83,7 +83,6 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TextField newLugarPartidaTour;
 
-
     @FXML
     private DatePicker newFechaPartida_DP;
 
@@ -226,13 +225,13 @@ public class FXMLDocumentController implements Initializable {
         stringCompuesto.append("Reporte listado de Reservas para un tour y una fecha específica");
         stringCompuesto.append("\n============================================================================\n");
         for (Reserva res : controlador.getReservasFechaEspecifica()) {
-                stringCompuesto.append(res.toString() + "\n");
+            stringCompuesto.append(res.toString() + "\n");
         }
         stringCompuesto.append("\n============================================================================\n");
         stringCompuesto.append("Reporte de todos los tours de tipo ecológico");
         stringCompuesto.append("\n============================================================================\n");
         for (Tour tour : controlador.getListaToursEcologicosXML().values()) {
-           stringCompuesto.append(tour.toString() + "\n");
+            stringCompuesto.append(tour.toString() + "\n");
         }
         stringCompuesto.append("\n============================================================================\n");
         stringCompuesto.append("Reporte  Reservas asociadas a tour empresarial");
@@ -341,25 +340,33 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     public void agregarNuevoTour(ActionEvent event) throws Exception {
 
-        String nombre = newNombreTour.getText();
-        Integer id = new Integer(newIdTour.getText());
-        String lugarPartida = newLugarPartidaTour.getText();
-        Double precio = Double.parseDouble(newPrecioTour.getText());
-        String horaPartida = newHoraPartida.getText();
-        Date fechaPartida;
-        fechaPartida = Date.from(newFechaPartida_DP.getValue().
+        String nombre = null;
+        Integer id = null;
+        String lugarPartida = null;
+        Double precio = null;
+        String horaPartida = null;
+        Date fechaPartida = null;
+        Date fechaRegreso = null;
+        Tour existeTour = null;
+        boolean digitosValidados = false;
+        boolean error = false;
+        try {
+            nombre = newNombreTour.getText();
+            id = new Integer(newIdTour.getText());
+            lugarPartida = newLugarPartidaTour.getText();
+            precio = Double.parseDouble(newPrecioTour.getText());
+            horaPartida = newHoraPartida.getText();
+            fechaPartida = Date.from(newFechaPartida_DP.getValue().
                     atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 
-        Date fechaRegreso = Date.from(newFechaRegreso_DP.getValue().
+            fechaRegreso = Date.from(newFechaRegreso_DP.getValue().
                     atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-        
-        Tour existeTour;
-        existeTour = controlador.getGestionTours().getTour(controlador.getListaTours(), id);
-        boolean digitosValidados = controlador.validarDigitos(id);
-
-        if (existeTour == null && digitosValidados == true && 
-                nombre != null && id != null && lugarPartida != null 
-                && precio != null && horaPartida != null) {
+            existeTour = controlador.getGestionTours().getTour(controlador.getListaTours(), id);
+            digitosValidados = controlador.validarDigitos(id);
+        } catch (Exception e) {
+            error = true;
+        }
+        if (existeTour == null && digitosValidados == true && !error) {
             if (tipoTour.getSelectedToggle().equals(tour_RadioButton)) {
 
                 Tour tour = new Tour(id, nombre, lugarPartida, horaPartida, precio,
@@ -368,14 +375,35 @@ public class FXMLDocumentController implements Initializable {
 
             } else if (tipoTour.getSelectedToggle().equals(tourEcologico_RadioButton)) {
 
-                Double impuestoLocal = Double.parseDouble(newImpuestoLocal.getText());
+                Double impuestoLocal = null;
+                try {
+                    impuestoLocal = Double.parseDouble(newImpuestoLocal.getText());
+                } catch (Exception e) {
+                    error = true;
+                    crearAlerta(AlertType.ERROR,
+                            "ERROR",
+                            "Se ha presentado un error",
+                            e.getLocalizedMessage());
+                }
                 Ecologico nuevoEco = new Ecologico(true, impuestoLocal,
                         true, id, nombre, lugarPartida, horaPartida, precio, fechaPartida, fechaRegreso);
-                controlador.getGestionTours().insertarTour(controlador.getListaTours(), nuevoEco);
+                if (!error) {
+                    controlador.getGestionTours().insertarTour(controlador.getListaTours(), nuevoEco);
+                }
 
             } else if (tipoTour.getSelectedToggle().equals(tourEmpresarial_RadioButton)) {
 
-                String nombreEmpresa = newNombreEmpresa.getText();
+                String nombreEmpresa = null;
+
+                try {
+                    nombreEmpresa = newNombreEmpresa.getText();
+                } catch (Exception e) {
+                    error = true;
+                    crearAlerta(AlertType.ERROR,
+                            "ERROR",
+                            "Se ha presentado un error",
+                            e.getLocalizedMessage());
+                }
                 TipoEmpresa tipo = null;
                 if (tipoTourEmpresarial.getSelectedToggle().equals(newTourTecnologia)) {
                     tipo = TipoEmpresa.TECNOLOGIA;
@@ -386,19 +414,24 @@ public class FXMLDocumentController implements Initializable {
                 }
                 Empresarial nuevoEmp = new Empresarial(nombreEmpresa, true, tipo,
                         id, nombre, lugarPartida, horaPartida, precio, fechaPartida, fechaRegreso);
-                controlador.getGestionTours().insertarTour(controlador.getListaTours(), nuevoEmp);
+                if (!error) {
+                    controlador.getGestionTours().insertarTour(controlador.getListaTours(), nuevoEmp);
+                }
             }
 
-            crearAlerta(AlertType.CONFIRMATION,
-                    "Exito!",
-                    "Se ha agregado el  nuevo tour",
-                    "Numero de tours " + controlador.getListaTours().size());
+            if (!error) {
+                crearAlerta(AlertType.CONFIRMATION,
+                        "Exito!",
+                        "Se ha agregado el  nuevo tour",
+                        "Numero de tours " + controlador.getListaTours().size());
+            }
         } else {
             crearAlerta(AlertType.ERROR,
                     "ERROR",
                     "No se ha podido agregar el tour por alguno de estos motivos",
                     " -El tour ya existe\n -El codigo no es valido\n"
-                    + " -La fecha ingresada no es valida");
+                    + " -La fecha ingresada no es valida \n"
+                    + " -Faltan datos por llenar");
         }
         clearItemsTour();
         fillItemsTour();
