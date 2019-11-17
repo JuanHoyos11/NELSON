@@ -1,6 +1,8 @@
 
 package model;
 
+import enumeradores.TipoTransporte;
+
 public class Transporte extends ServicioAdicional{
     
     //ATRIBUTOS

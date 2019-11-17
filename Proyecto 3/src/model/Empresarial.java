@@ -1,6 +1,7 @@
 
 package model;
 
+import enumeradores.TipoEmpresa;
 import java.util.Date;
 
 public class Empresarial extends Tour{

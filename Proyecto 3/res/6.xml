@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<transporteCarroParticularXML>
+    <Listado_de_carros_Particulares>
+        <codigoServicio>3</codigoServicio>
+        <nombreServicio>x particular</nombreServicio>
+        <precio>13.0</precio>
+    </Listado_de_carros_Particulares>
+    <Listado_de_carros_Particulares>
+        <codigoServicio>5</codigoServicio>
+        <nombreServicio>y particular</nombreServicio>
+        <precio>12.0</precio>
+    </Listado_de_carros_Particulares>
+    <Listado_de_carros_Particulares>
+        <codigoServicio>3</codigoServicio>
+        <nombreServicio>x particular</nombreServicio>
+        <precio>13.0</precio>
+    </Listado_de_carros_Particulares>
+    <Listado_de_carros_Particulares>
+        <codigoServicio>5</codigoServicio>
+        <nombreServicio>y particular</nombreServicio>
+        <precio>12.0</precio>
+    </Listado_de_carros_Particulares>
+    <Listado_de_carros_Particulares>
+        <codigoServicio>3</codigoServicio>
+        <nombreServicio>x particular</nombreServicio>
+        <precio>13.0</precio>
+    </Listado_de_carros_Particulares>
+    <Listado_de_carros_Particulares>
+        <codigoServicio>5</codigoServicio>
+        <nombreServicio>y particular</nombreServicio>
+        <precio>12.0</precio>
+    </Listado_de_carros_Particulares>
+    <Listado_de_carros_Particulares>
+        <codigoServicio>3</codigoServicio>
+        <nombreServicio>x particular</nombreServicio>
+        <precio>13.0</precio>
+    </Listado_de_carros_Particulares>
+    <Listado_de_carros_Particulares>
+        <codigoServicio>5</codigoServicio>
+        <nombreServicio>y particular</nombreServicio>
+        <precio>12.0</precio>
+    </Listado_de_carros_Particulares>
+</transporteCarroParticularXML>

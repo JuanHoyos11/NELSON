@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<reservasTourEmpresarialXML>
+    <Listado_de_reservas_de_tours_empresariales>
+        <cantidadPersonas>2</cantidadPersonas>
+        <clienteReserva>
+            <nombreCompleto>Elver Galarga</nombreCompleto>
+            <numeroIdentificacion>20002</numeroIdentificacion>
+            <telefonoContacto>3165318</telefonoContacto>
+        </clienteReserva>
+        <fecha/>
+        <numeroReserva>103</numeroReserva>
+        <pagado>true</pagado>
+        <serviciosAdicionales>
+            <codigoServicio>3</codigoServicio>
+            <nombreServicio>x particular</nombreServicio>
+            <precio>13.0</precio>
+        </serviciosAdicionales>
+        <serviciosAdicionales>
+            <codigoServicio>5</codigoServicio>
+            <nombreServicio>y particular</nombreServicio>
+            <precio>12.0</precio>
+        </serviciosAdicionales>
+        <serviciosAdicionales>
+            <codigoServicio>0</codigoServicio>
+            <nombreServicio>taxi</nombreServicio>
+            <precio>0.0</precio>
+        </serviciosAdicionales>
+        <tourReservado>
+            <codigoIdentificacion>3001</codigoIdentificacion>
+            <fechaRegreso>2019-04-05T00:00:00-05:00</fechaRegreso>
+            <fechaSalida>2019-04-01T00:00:00-05:00</fechaSalida>
+            <horaPartida>23:00</horaPartida>
+            <lugarPartita>Cartagena</lugarPartita>
+            <nombreComercial>Wall Street Paisa</nombreComercial>
+            <precio>500.0</precio>
+        </tourReservado>
+    </Listado_de_reservas_de_tours_empresariales>
+</reservasTourEmpresarialXML>

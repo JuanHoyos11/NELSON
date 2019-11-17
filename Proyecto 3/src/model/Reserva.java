@@ -1,5 +1,6 @@
 package model;
 
+import enumeradores.TipoTransporte;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -10,7 +11,7 @@ import Entidad.Tour;*/
 public class Reserva {
 
 	//ATRIBUTOS
-	private ArrayList 	<ServicioAdicional> serviciosAdicionales;
+	private ArrayList 	<ServicioAdicional> serviciosAdicionales = new ArrayList<>();
 	private long 		numeroReserva;
 	private LocalDateTime 	fecha;
 	private boolean 	pagado;
@@ -127,5 +128,16 @@ public class Reserva {
             }
             return particulares;
         }
+
+    @Override
+    public String toString() {
+        return    "\n numeroReserva=" + numeroReserva 
+                + "\n fecha=" + fecha 
+                + "\n pagado=" + pagado 
+                + "\n cantidadPersonas=" + cantidadPersonas + "\n"
+                + "\n numero de servicios adicionales= " + serviciosAdicionales.size()
+                + "\n";
+    }
+        
         
 }

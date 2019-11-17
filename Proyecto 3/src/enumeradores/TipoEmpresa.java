@@ -1,5 +1,5 @@
 
-package model;
+package enumeradores;
 
 public enum TipoEmpresa {
     

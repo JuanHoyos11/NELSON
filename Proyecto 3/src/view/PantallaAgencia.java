@@ -19,7 +19,7 @@ import model.Concierto;
 import model.Ecologico;
 import model.Empresarial;
 
-import model.TipoTransporte;
+import enumeradores.TipoTransporte;
 
 import model.Transporte;
 
@@ -28,7 +28,7 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.TipoEmpresa;
+import enumeradores.TipoEmpresa;
 
 public class PantallaAgencia {
 
@@ -566,7 +566,7 @@ public class PantallaAgencia {
 			cantiPersonas = sc.nextInt();
 			numeroReserva = agencia.generarNumeroReserva();
 
-			agencia.agregarReserva(numeroReserva, fechaReserva, pagado, cantiPersonas, tour, cliente);
+			//agencia.agregarReserva(numeroReserva, fechaReserva, pagado, cantiPersonas, tour, cliente);
 			System.out.println("Desea adquirir algun servicio adicional? (SI = 1/ NO = 0)");
 			opc = sc.nextInt();
 

@@ -40,4 +40,13 @@ public abstract class ServicioAdicional {
         
         public abstract double calcularPrecio();
 
+    @Override
+    public String toString() {
+        return "\n ServicioAdicional " 
+                + "\n codigoServicio=" + codigoServicio 
+                + "\n nombreServicio=" + nombreServicio 
+                + "\n precio=" + precio + "\n";
+    }
+        
+
 }

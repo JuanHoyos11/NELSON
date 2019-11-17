@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<tourEcologicoXML>
+    <listaTours>
+        <entry>
+            <key>2001</key>
+            <value>
+                <codigoIdentificacion>2001</codigoIdentificacion>
+                <fechaRegreso>2019-02-05T00:00:00-05:00</fechaRegreso>
+                <fechaSalida>2019-02-01T00:00:00-05:00</fechaSalida>
+                <horaPartida>5:00</horaPartida>
+                <lugarPartita>Ibague</lugarPartita>
+                <nombreComercial>Trip verde</nombreComercial>
+                <precio>400.0</precio>
+            </value>
+        </entry>
+        <entry>
+            <key>2002</key>
+            <value>
+                <codigoIdentificacion>2002</codigoIdentificacion>
+                <fechaRegreso>2019-03-05T00:00:00-05:00</fechaRegreso>
+                <fechaSalida>2019-03-01T00:00:00-05:00</fechaSalida>
+                <horaPartida>0:00</horaPartida>
+                <lugarPartita>Honda</lugarPartita>
+                <nombreComercial>Fumaratto</nombreComercial>
+                <precio>100.0</precio>
+            </value>
+        </entry>
+    </listaTours>
+</tourEcologicoXML>

@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Ecologico;
 import model.Empresarial;
-import model.TipoEmpresa;
+import enumeradores.TipoEmpresa;
 
 import model.Tour;
 

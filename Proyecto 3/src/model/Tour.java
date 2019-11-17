@@ -82,12 +82,8 @@ public class Tour {
         this.fechaRegreso = fechaRegreso;
     }
     
-    //TO STRING
-
-    @Override
-    public String toString() {
-        return "Tour{" + "fechaSalida=" + fechaSalida + ", fechaRegreso=" + fechaRegreso + '}';
-    }
+    
+    
     
     //METODOS
      
@@ -98,6 +94,17 @@ public class Tour {
         int diasEstadia = (int) diferencia;
         
         return diasEstadia;
+    }
+
+    @Override
+    public String toString() {
+        return "codigoIdentificacion=" + codigoIdentificacion + 
+                "\n nombreComercial=" + nombreComercial + 
+                "\n lugarPartita=" + lugarPartita + 
+                "\n horaPartida=" + horaPartida +
+                "\n precio=" + precio +
+                "\n fechaSalida=" + fechaSalida + 
+                "\n fechaRegreso=" + fechaRegreso + '\n';
     }
     
     public double calcularPrecio()

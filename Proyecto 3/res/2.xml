@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<reservasFechaEspecificaXML>
+    <Listado_de_reservas_de_un_tour_y_fecha_especifica>
+        <cantidadPersonas>2</cantidadPersonas>
+        <clienteReserva>
+            <nombreCompleto>Armando Bronca</nombreCompleto>
+            <numeroIdentificacion>10001</numeroIdentificacion>
+            <telefonoContacto>3165317</telefonoContacto>
+        </clienteReserva>
+        <fecha/>
+        <numeroReserva>100</numeroReserva>
+        <pagado>true</pagado>
+        <serviciosAdicionales>
+            <codigoServicio>3</codigoServicio>
+            <nombreServicio>x particular</nombreServicio>
+            <precio>13.0</precio>
+        </serviciosAdicionales>
+        <serviciosAdicionales>
+            <codigoServicio>5</codigoServicio>
+            <nombreServicio>y particular</nombreServicio>
+            <precio>12.0</precio>
+        </serviciosAdicionales>
+        <serviciosAdicionales>
+            <codigoServicio>0</codigoServicio>
+            <nombreServicio>taxi</nombreServicio>
+            <precio>0.0</precio>
+        </serviciosAdicionales>
+        <tourReservado>
+            <codigoIdentificacion>1000001</codigoIdentificacion>
+            <fechaRegreso>2019-01-05T00:00:00-05:00</fechaRegreso>
+            <fechaSalida>2019-01-01T00:00:00-05:00</fechaSalida>
+            <horaPartida>5:00</horaPartida>
+            <lugarPartita>Medellin</lugarPartita>
+            <nombreComercial>Paraiso Travel</nombreComercial>
+            <precio>100.0</precio>
+        </tourReservado>
+    </Listado_de_reservas_de_un_tour_y_fecha_especifica>
+</reservasFechaEspecificaXML>

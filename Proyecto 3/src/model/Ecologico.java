@@ -71,8 +71,16 @@ public class Ecologico extends Tour{
     //METODOS
     
     @Override
-    public int calcularEstadia()
+    public String toString()
     {
+        return super.toString() + "Ecologico :" + "\n vacunacionRequerida=" + vacunacionRequerida + 
+                "\n impuestoLocal=" + impuestoLocal + 
+                "\n dificilAcceso=" + dificilAcceso +
+                "\n";
+    }
+
+    @Override
+    public int calcularEstadia() {
         if(dificilAcceso == true)
         {
             return (super.calcularEstadia()+2);

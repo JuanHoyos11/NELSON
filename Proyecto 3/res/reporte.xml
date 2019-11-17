@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<archivosXMLListaReservas>
+    <Listado_de_reservas_existentes>
+        <cantidadPersonas>2</cantidadPersonas>
+        <clienteReserva>
+            <nombreCompleto>Armando Bronca</nombreCompleto>
+            <numeroIdentificacion>10001</numeroIdentificacion>
+            <telefonoContacto>3165317</telefonoContacto>
+        </clienteReserva>
+        <fecha/>
+        <numeroReserva>100</numeroReserva>
+        <pagado>true</pagado>
+        <serviciosAdicionales>
+            <codigoServicio>3</codigoServicio>
+            <nombreServicio>x particular</nombreServicio>
+            <precio>13.0</precio>
+        </serviciosAdicionales>
+        <serviciosAdicionales>
+            <codigoServicio>5</codigoServicio>
+            <nombreServicio>y particular</nombreServicio>
+            <precio>12.0</precio>
+        </serviciosAdicionales>
+        <serviciosAdicionales>
+            <codigoServicio>0</codigoServicio>
+            <nombreServicio>taxi</nombreServicio>
+            <precio>0.0</precio>
+        </serviciosAdicionales>
+    </Listado_de_reservas_existentes>
+    <Listado_de_reservas_existentes>
+        <cantidadPersonas>2</cantidadPersonas>
+        <clienteReserva>
+            <nombreCompleto>Elver Galarga</nombreCompleto>
+            <numeroIdentificacion>20002</numeroIdentificacion>
+            <telefonoContacto>3165318</telefonoContacto>
+        </clienteReserva>
+        <fecha/>
+        <numeroReserva>101</numeroReserva>
+        <pagado>true</pagado>
+        <serviciosAdicionales>
+            <codigoServicio>3</codigoServicio>
+            <nombreServicio>x particular</nombreServicio>
+            <precio>13.0</precio>
+        </serviciosAdicionales>
+        <serviciosAdicionales>
+            <codigoServicio>5</codigoServicio>
+            <nombreServicio>y particular</nombreServicio>
+            <precio>12.0</precio>
+        </serviciosAdicionales>
+        <serviciosAdicionales>
+            <codigoServicio>0</codigoServicio>
+            <nombreServicio>taxi</nombreServicio>
+            <precio>0.0</precio>
+        </serviciosAdicionales>
+        <tourReservado>
+            <codigoIdentificacion>1000002</codigoIdentificacion>
+            <fechaRegreso>2019-01-15T00:00:00-05:00</fechaRegreso>
+            <fechaSalida>2019-01-06T00:00:00-05:00</fechaSalida>
+            <horaPartida>22:00</horaPartida>
+            <lugarPartita>Bogota</lugarPartita>
+            <nombreComercial>Adventure Time</nombreComercial>
+            <precio>300.0</precio>
+        </tourReservado>
+    </Listado_de_reservas_existentes>
+    <Listado_de_reservas_existentes>
+        <cantidadPersonas>2</cantidadPersonas>
+        <clienteReserva>
+            <nombreCompleto>Elver Galarga</nombreCompleto>
+            <numeroIdentificacion>20002</numeroIdentificacion>
+            <telefonoContacto>3165318</telefonoContacto>
+        </clienteReserva>
+        <fecha/>
+        <numeroReserva>102</numeroReserva>
+        <pagado>true</pagado>
+        <serviciosAdicionales>
+            <codigoServicio>3</codigoServicio>
+            <nombreServicio>x particular</nombreServicio>
+            <precio>13.0</precio>
+        </serviciosAdicionales>
+        <serviciosAdicionales>
+            <codigoServicio>5</codigoServicio>
+            <nombreServicio>y particular</nombreServicio>
+            <precio>12.0</precio>
+        </serviciosAdicionales>
+        <serviciosAdicionales>
+            <codigoServicio>0</codigoServicio>
+            <nombreServicio>taxi</nombreServicio>
+            <precio>0.0</precio>
+        </serviciosAdicionales>
+        <tourReservado>
+            <codigoIdentificacion>2001</codigoIdentificacion>
+            <fechaRegreso>2019-02-05T00:00:00-05:00</fechaRegreso>
+            <fechaSalida>2019-02-01T00:00:00-05:00</fechaSalida>
+            <horaPartida>5:00</horaPartida>
+            <lugarPartita>Ibague</lugarPartita>
+            <nombreComercial>Trip verde</nombreComercial>
+            <precio>400.0</precio>
+        </tourReservado>
+    </Listado_de_reservas_existentes>
+    <Listado_de_reservas_existentes>
+        <cantidadPersonas>2</cantidadPersonas>
+        <clienteReserva>
+            <nombreCompleto>Elver Galarga</nombreCompleto>
+            <numeroIdentificacion>20002</numeroIdentificacion>
+            <telefonoContacto>3165318</telefonoContacto>
+        </clienteReserva>
+        <fecha/>
+        <numeroReserva>103</numeroReserva>
+        <pagado>true</pagado>
+        <serviciosAdicionales>
+            <codigoServicio>3</codigoServicio>
+            <nombreServicio>x particular</nombreServicio>
+            <precio>13.0</precio>
+        </serviciosAdicionales>
+        <serviciosAdicionales>
+            <codigoServicio>5</codigoServicio>
+            <nombreServicio>y particular</nombreServicio>
+            <precio>12.0</precio>
+        </serviciosAdicionales>
+        <serviciosAdicionales>
+            <codigoServicio>0</codigoServicio>
+            <nombreServicio>taxi</nombreServicio>
+            <precio>0.0</precio>
+        </serviciosAdicionales>
+    </Listado_de_reservas_existentes>
+</archivosXMLListaReservas>
