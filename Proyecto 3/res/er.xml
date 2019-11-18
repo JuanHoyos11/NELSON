@@ -10,6 +10,11 @@
         <fecha/>
         <numeroReserva>100</numeroReserva>
         <pagado>false</pagado>
+        <serviciosAdicionales>
+            <codigoServicio>123</codigoServicio>
+            <nombreServicio>asd</nombreServicio>
+            <precio>100.0</precio>
+        </serviciosAdicionales>
         <tourReservado>
             <codigoIdentificacion>2002</codigoIdentificacion>
             <fechaRegreso>2019-03-05T00:00:00-05:00</fechaRegreso>

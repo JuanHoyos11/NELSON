@@ -6,6 +6,7 @@
 package proyecto.pkg3;
 
 import control.ControlAgencia;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -42,8 +43,13 @@ import model.Reserva;
 import model.ServicioAdicional;
 import enumeradores.TipoEmpresa;
 import enumeradores.TipoTransporte;
+import javafx.event.Event;
 import javafx.scene.control.Spinner;
+import javafx.scene.input.DragEvent;
+import model.Concierto;
 import model.Tour;
+import model.Transporte;
+import sun.plugin2.message.transport.Transport;
 import view.PantallaAgencia;
 
 /**
@@ -268,13 +274,7 @@ public class FXMLDocumentController implements Initializable {
     private DatePicker newFechaReserva_DatePicker_r;
 
     @FXML
-    private RadioButton si_pagarTourReserva_RB;
-
-    @FXML
-    private RadioButton no_pagarTourReserva_RB;
-
-    @FXML//borrar
-    private ToggleGroup grupoReservarTour;
+    private Button pagarServicioAdicional_BT;
 
     @FXML
     private ToggleGroup grupoPagar;
@@ -286,7 +286,7 @@ public class FXMLDocumentController implements Initializable {
     private ToggleGroup grupoTransporte;
 
     @FXML
-    private TextField newcantidadPersonas_reservas_TF;
+    private TextField newCantidadPersonas_reservas_TF;
 
     @FXML
     private RadioButton si_agregarConciertoReserva_RB;
@@ -325,13 +325,59 @@ public class FXMLDocumentController implements Initializable {
     private TextField newNumeroDePasajeros_TF;
 
     @FXML
-    private ChoiceBox<TipoTransporte> newTipoVehiculo_CB;
-
-    @FXML
     private Button agregarBotonReserva;
 
     @FXML
     private Spinner<Integer> cantidadPasajeros_Spinner = new Spinner<Integer>();
+    @FXML
+    private Button agregarServicioAdicional_BT;
+    @FXML
+    private Label precioSinAdicionales_Reserva_Label;
+
+    @FXML
+    private Label precioServiciosAdicionales_Reserva_label;
+
+    @FXML
+    private Label precioTotal_Reserva_Label;
+    @FXML
+    private Label numReserva_Label;
+
+    @FXML
+    private ChoiceBox<Long> numeroReserva_CB;
+
+    @FXML
+    private ChoiceBox<TipoTransporte> newTipoVehiculo_CB;
+    @FXML
+    private ChoiceBox<Long> numeroReservaModificar_CB;
+
+    @FXML
+    private RadioButton fechaModificarReserva_RB;
+
+    @FXML
+    private ToggleGroup grupoModificarReserva;
+
+    @FXML
+    private RadioButton cantiPersonasModificar_RB;
+
+    @FXML
+    private RadioButton eliminarSA_RB;
+
+    @FXML
+    private TextField cantiPersonasModificar_TF;
+
+    @FXML
+    private DatePicker fechaModificarReserva_DP;
+
+    @FXML
+    private ChoiceBox<Long> idSAModificarReserva_CB;
+
+    @FXML
+    private CheckBox seguroModificar_CB;
+
+    @FXML
+    private Button modificarReserva_BT;
+    @FXML
+    private ToggleGroup grupoModificarReserva1;
 
     @FXML
     private void fillItemsTour() {
@@ -899,8 +945,34 @@ public class FXMLDocumentController implements Initializable {
 //=================================Reservas================================================
 
     @FXML
-    void crearReserva() {
-        Boolean pago = false;
+    private void fillItemsReserva() {
+        for (Reserva res : controlador.getReservas()) {
+            numeroReservaModificar_CB.getItems().add(res.getNumeroReserva());
+        }
+    }
+
+    @FXML
+    private void fillItemsServicioAdicional(Long numeroReserva) {
+        Reserva res = controlador.getReserva(numeroReserva);
+        for (ServicioAdicional ser : res.getServiciosAdicionales()) {
+            idSAModificarReserva_CB.getItems().add(ser.getCodigoServicio());
+        }
+    }
+
+    @FXML
+    private void clearItemsServicioAdicional() {
+        idSAModificarReserva_CB.getItems().clear();
+    }
+
+    @FXML
+    private void clearItemsReserva() {
+        numeroReservaModificar_CB.getItems().clear();
+    }
+
+    @FXML
+    void crearReserva(ActionEvent event) {
+
+        actualizarListaServicios();
         Long codigoTour = null, id = null, nummeroReserva = null;
         Long codServ = null;
         String nombreServ = null, artista = null, lugar = null;
@@ -908,44 +980,368 @@ public class FXMLDocumentController implements Initializable {
         Double precio = null, distancia = null;
         int numeroPasajeros = 0;
         int cantiPersona = 0;
-        boolean pagado = false;
-        TipoTransporte tipo;
+        TipoTransporte tipo = null;
         LocalDateTime fechaReserva = null;
         Tour tour = new Tour();
         Cliente cliente = new Cliente();
+        boolean error = false;
+        boolean datosCompletos;
+        Double precioSinAdicion, precioSerAdiconales, precioTotalRes;
 
-        try {
-            codigoTour = Long.parseLong(codigoTour_Reserva_Button.getText());
-            id = Long.parseLong(codigoCliente_Reserva_Tour.getText());
-            fechaReserva = newFechaReserva_DatePicker_r.getValue().atStartOfDay();
-            if (grupoReservarTour.equals(si_pagarTourReserva_RB)) {
-                pago = true;
-            }
-            cantiPersona = Integer.parseInt(newcantidadPersonas_reservas_TF.getText());
+        if (event.getSource().equals(agregarBotonReserva)) {
 
-        } catch (Exception e) {
-            //crear alerta error
-        }
-        tour = controlador.getGestionTours().getTour(controlador.getListaTours(), codigoTour);
-        cliente = controlador.getGestionCliente().getCliente(id, controlador.getListaClientes());
-        if (cliente != null && tour != null) {
-            if (controlador.existeReserva(fechaReserva, id, codigoTour)
-                    || controlador.reservaMenorADosDias(fechaReserva)) {
-                //error ya existe la reserva o la reserva no es menor a dos dias
-            } else {
-                controlador.agregarReserva(fechaReserva, true, cantiPersona, tour, cliente);
-            }
             try {
+                codigoTour = Long.parseLong(codigoTour_Reserva_Button.getText());
+                id = Long.parseLong(codigoCliente_Reserva_Tour.getText());
+                fechaReserva = newFechaReserva_DatePicker_r.getValue().atStartOfDay();
+                cantiPersona = Integer.parseInt(newCantidadPersonas_reservas_TF.getText());
+
+            } catch (Exception e) {
+                error = true;
+                crearAlerta(AlertType.ERROR,
+                        "ERROR",
+                        "Se presento una falla ",
+                        e.getLocalizedMessage() + "  " + e.getMessage());
+            }
+
+            tour = controlador.getGestionTours().getTour(controlador.getListaTours(), codigoTour);
+            cliente = controlador.getGestionCliente().getCliente(id, controlador.getListaClientes());
+
+            if (cliente != null && tour != null) {
+                if (controlador.existeReserva(fechaReserva, id, codigoTour)
+                        || controlador.reservaMenorADosDias(fechaReserva)) {
+
+                    crearAlerta(AlertType.ERROR, "ERROR!",
+                            "-Ya existe la reserva o \n"
+                            + "-La reserva no se puede generar con menos de dos dias de anticipacion",
+                            ":(");
+                } else {
+
+                    controlador.agregarReserva(fechaReserva, false, cantiPersona, tour, cliente);
+                    nummeroReserva = controlador.getNumeroDeReserva(fechaReserva, id, codigoTour);
+                    numReserva_Label.setText(String.valueOf(nummeroReserva));
+                    precioSerAdiconales = controlador.costoServiciosAdicionales(nummeroReserva);
+                    precioSinAdicion = controlador.costoReservaSinAdicionales(nummeroReserva);
+                    precioTotalRes = controlador.costoReservaConAdicionales(nummeroReserva);
+                    precioServiciosAdicionales_Reserva_label.setText(String.valueOf(precioSerAdiconales));
+                    precioSinAdicionales_Reserva_Label.setText(String.valueOf(precioSinAdicion));
+                    precioTotal_Reserva_Label.setText(String.valueOf(precioTotalRes));
+                    clearItemsReserva();
+                    fillItemsReserva();
+                    crearAlerta(AlertType.CONFIRMATION,
+                            "Exito!",
+                            "Se ha creado la reserva",
+                            ":)");
+
+                }
+            } else {
+
+                crearAlerta(AlertType.ERROR,
+                        "ERROR!",
+                        "El cliente y/o el tour no existe",
+                        ":(");
+            }
+
+        } else if (event.getSource().equals(agregarServicioAdicional_BT)) {
+            try {
+
+                codigoTour = Long.parseLong(codigoTour_Reserva_Button.getText());
+                id = Long.parseLong(codigoCliente_Reserva_Tour.getText());
+                codServ = Long.parseLong(newCodigoServicio_TF.getText());
+                nombreServ = newNombreSevicio_TF.getText();
+                precio = Double.parseDouble(newPrecioServicio_TF.getText());
+                fechaReserva = newFechaReserva_DatePicker_r.getValue().atStartOfDay();
 
             } catch (Exception e) {
 
-            }
-            if (grupoConcierto.getSelectedToggle().equals(si_agregarConciertoReserva_RB)) {
+                crearAlerta(AlertType.ERROR,
+                        "Error",
+                        "Hubo un fallo",
+                        e.getLocalizedMessage());
 
             }
-        } else {
-            //crear alerta ya existe tour y/o cliente
+
+            tour = controlador.getGestionTours().getTour(controlador.getListaTours(), codigoTour);
+            cliente = controlador.getGestionCliente().getCliente(id, controlador.getListaClientes());
+            nummeroReserva = controlador.getNumeroDeReserva(fechaReserva, id, codigoTour);
+
+            if (cliente != null && tour != null && nummeroReserva != -1) {
+
+                if (grupoConcierto.getSelectedToggle().equals(si_agregarConciertoReserva_RB)) {
+
+                    datosCompletos = true;
+                    try {
+
+                        artista = newNombreArtista_TF.getText();
+                        lugar = newNombreLugar_TF.getText();
+                        horaIngreso = newHoraIngresoReservas_TF.getText();
+
+                    } catch (Exception e) {
+
+                        datosCompletos = false;
+                        crearAlerta(AlertType.ERROR,
+                                "ERROR!",
+                                "Hubo un fallo en agregar concierto",
+                                e.getLocalizedMessage());
+
+                    }
+                    if (datosCompletos) {
+
+                        Concierto concierto;
+                        concierto = new Concierto(artista, lugar, horaIngreso,
+                                codServ, nombreServ, precio);
+                        controlador.getReservas().
+                                get(controlador.getReservas().size() - 1).
+                                getServiciosAdicionales().add(concierto);
+                        crearAlerta(AlertType.CONFIRMATION,
+                                "EXITO!",
+                                "Se ha agregado el concierto!",
+                                ":)");
+                    }
+
+                }
+                if (grupoTransporte.getSelectedToggle().equals(siAgregarTransporteReserva_RB)) {
+
+                    datosCompletos = true;
+                    try {
+
+                        distancia = Double.parseDouble(newDistanciaReserva_TF.getText());
+                        tipo = newTipoVehiculo_CB.getValue();
+                        numeroPasajeros = cantidadPasajeros_Spinner.getValue();
+
+                    } catch (Exception e) {
+
+                        datosCompletos = false;
+                        crearAlerta(AlertType.ERROR,
+                                "ERROR!",
+                                "Hubo un error en agregar transporte",
+                                e.getLocalizedMessage());
+
+                    }
+                    if (datosCompletos) {
+
+                        Transporte trans = new Transporte(distancia, tipo, numeroPasajeros,
+                                codServ, nombreServ, precio);
+                        controlador.getReservas().
+                                get(controlador.getReservas().size() - 1).
+                                getServiciosAdicionales().add(trans);
+                        crearAlerta(AlertType.CONFIRMATION,
+                                "EXITO!",
+                                "Se ha agregado el transporte!",
+                                ":)");
+
+                    }
+                }
+                numReserva_Label.setText(String.valueOf(nummeroReserva));
+                precioSerAdiconales = controlador.costoServiciosAdicionales(nummeroReserva);
+                precioSinAdicion = controlador.costoReservaSinAdicionales(nummeroReserva);
+                precioTotalRes = controlador.costoReservaConAdicionales(nummeroReserva);
+                precioServiciosAdicionales_Reserva_label.setText(String.valueOf(precioSerAdiconales));
+                precioSinAdicionales_Reserva_Label.setText(String.valueOf(precioSinAdicion));
+                precioTotal_Reserva_Label.setText(String.valueOf(precioTotalRes));
+
+            } else {
+
+                crearAlerta(AlertType.ERROR,
+                        "ERROR!",
+                        "El cliente, el tour y/o la reserva no existe",
+                        ":(");
+            }
         }
+        if (event.getSource().equals(pagarServicioAdicional_BT)) {
+            try {
+                codigoTour = Long.parseLong(codigoTour_Reserva_Button.getText());
+                id = Long.parseLong(codigoCliente_Reserva_Tour.getText());
+                fechaReserva = newFechaReserva_DatePicker_r.getValue().atStartOfDay();
+            } catch (Exception e) {
+                crearAlerta(AlertType.ERROR,
+                        "ERROR!",
+                        "Deben de estar llenos los campos:",
+                        "-Codigo del tour\n"
+                        + "-Id cliente\n"
+                        + "-Fecha reserva ");
+            }
+
+            nummeroReserva = controlador.getNumeroDeReserva(fechaReserva, id, codigoTour);
+            if (nummeroReserva != -1) {
+                controlador.pagado(nummeroReserva);
+                crearAlerta(AlertType.CONFIRMATION,
+                        "EXITO!",
+                        "Se ha pagado la reserva con exito",
+                        ":)");
+            }
+        }
+        if (event.getSource().equals(si_agregarConciertoReserva_RB)) {
+            siAgregarTransporteReserva_RB.setDisable(true);
+            noAgregarTransporteReserva_RB.setDisable(true);
+            newNombreArtista_TF.setDisable(false);
+            newNombreLugar_TF.setDisable(false);
+            newHoraIngresoReservas_TF.setDisable(false);
+        } else if (event.getSource().equals(no_agregarConciertoReserva_RB)) {
+            siAgregarTransporteReserva_RB.setDisable(false);
+            noAgregarTransporteReserva_RB.setDisable(false);
+            newNombreArtista_TF.setDisable(true);
+            newNombreLugar_TF.setDisable(true);
+            newHoraIngresoReservas_TF.setDisable(true);
+        }
+        if (event.getSource().equals(siAgregarTransporteReserva_RB)) {
+            si_agregarConciertoReserva_RB.setDisable(true);
+            no_agregarConciertoReserva_RB.setDisable(true);
+            newDistanciaReserva_TF.setDisable(false);
+            cantidadPasajeros_Spinner.setDisable(false);
+            newTipoVehiculo_CB.setDisable(false);
+        } else if (event.getSource().equals(noAgregarTransporteReserva_RB)) {
+            si_agregarConciertoReserva_RB.setDisable(false);
+            no_agregarConciertoReserva_RB.setDisable(false);
+            newDistanciaReserva_TF.setDisable(true);
+            cantidadPasajeros_Spinner.setDisable(true);
+            newTipoVehiculo_CB.setDisable(true);
+        }
+
+    }
+
+    @FXML
+    void modificarReserva(ActionEvent event) {
+
+        Long numReserva = null;
+        Reserva res = null;
+        Reserva original = null;
+        boolean error = false;
+        if (event.getSource().equals(modificarReserva_BT)) {
+            try {
+                numReserva = numeroReservaModificar_CB.getValue();
+                res = controlador.getReserva(numReserva);
+                original = new Reserva(res);
+            } catch (Exception e) {
+                error = true;
+                crearAlerta(AlertType.ERROR,
+                        "ERROR!",
+                        "Faltan datos por llenar",
+                        e.getLocalizedMessage());
+            }
+            if (grupoModificarReserva1.getSelectedToggle().equals(fechaModificarReserva_RB)) {
+                LocalDateTime fecha = fechaModificarReserva_DP.getValue().atStartOfDay();
+
+                if (controlador.fechaUnicaReserva(fecha)) {
+                    if (controlador.reservaMenorADosDias(fecha)) {
+                        error = true;
+                        crearAlerta(AlertType.ERROR,
+                                "ERROR!",
+                                "Lo sentimos pero",
+                                "La reserva debe hacerse con al menos dos dias de antelacion.");
+                    } else {
+                        res.setFecha(fecha);
+                    }
+
+                } else {
+                    error = true;
+                    crearAlerta(AlertType.ERROR,
+                            "ERROR!",
+                            "Lo sentimos",
+                            "ya existe una reserva agendada para esa fecha.");
+                }
+            } else if (grupoModificarReserva1.getSelectedToggle().equals(cantiPersonasModificar_RB)) {
+                Integer cantiPersonas = null;
+                try {
+                    cantiPersonas = Integer.parseInt(cantiPersonasModificar_TF.getText());
+                } catch (Exception e) {
+                    error = true;
+                    crearAlerta(AlertType.ERROR,
+                            "ERROR!",
+                            "Se produjo un fallo",
+                            e.getLocalizedMessage() + " " + e.getMessage());
+                }
+                if (cantiPersonas != null) {
+                    if (cantiPersonas <= 0) {
+                        error = true;
+                        crearAlerta(AlertType.ERROR,
+                                "ERROR!",
+                                "Lo sentimos",
+                                "Tiene que haber almenos una persona");
+                    } else {
+                        res.setCantidadPersonas(cantiPersonas);
+                    }
+                }
+            } else if (grupoModificarReserva1.getSelectedToggle().equals(eliminarSA_RB)) {
+
+                Long codServ = null;
+                try {
+                    codServ = idSAModificarReserva_CB.getValue();
+                } catch (Exception e) {
+                    error = true;
+                    crearAlerta(AlertType.INFORMATION,
+                            "ERROR!",
+                            "Lo sentimos",
+                            "Pero no hay servicios adicionales");
+                }
+                if (!error) {
+                    controlador.eliminarServicioAdicional(codServ, res);
+                }
+                actualizarListaServicios();
+
+            }
+            if (!error) {
+                numReserva_Label.setText(String.valueOf(numReserva));
+                Double precioSerAdiconales = controlador.costoServiciosAdicionales(numReserva);
+                Double precioSinAdicion = controlador.costoReservaSinAdicionales(numReserva);
+                Double precioTotalRes = controlador.costoReservaConAdicionales(numReserva);
+                precioServiciosAdicionales_Reserva_label.setText(String.valueOf(precioSerAdiconales));
+                precioSinAdicionales_Reserva_Label.setText(String.valueOf(precioSinAdicion));
+                precioTotal_Reserva_Label.setText(String.valueOf(precioTotalRes));
+
+                if (!seguroModificar_CB.isSelected()) {
+
+                    controlador.modificarReserva(numReserva, original);
+                    crearAlerta(AlertType.ERROR,
+                            "ERROR!",
+                            "Lo sentimos pero no se puede modificar la resrva",
+                            "Debe confirmar que si la quiere modificar");
+
+                } else {
+                    controlador.modificarReserva(numReserva, res);
+                    crearAlerta(AlertType.CONFIRMATION,
+                            "EXITO!",
+                            "La reserva ha sido modificada",
+                            ";)");
+                }
+
+            }
+        }
+
+        if (event.getSource().equals(cantiPersonasModificar_RB)) {
+            fechaModificarReserva_DP.setDisable(true);
+            idSAModificarReserva_CB.setDisable(true);
+            cantiPersonasModificar_TF.setDisable(false);
+        } else if (event.getSource().equals(fechaModificarReserva_RB)) {
+            fechaModificarReserva_DP.setDisable(false);
+            idSAModificarReserva_CB.setDisable(true);
+            cantiPersonasModificar_TF.setDisable(true);
+        } else if (event.getSource().equals(eliminarSA_RB)) {
+            fechaModificarReserva_DP.setDisable(true);
+            idSAModificarReserva_CB.setDisable(false);
+            cantiPersonasModificar_TF.setDisable(true);
+            try {
+                numReserva = numeroReservaModificar_CB.getValue();
+                clearItemsServicioAdicional();
+                fillItemsServicioAdicional(numReserva);
+            } catch (Exception e) {
+                crearAlerta(AlertType.WARNING,
+                        "Warning!",
+                        "Aun no escoge una reserva",
+                        "primero debe de escoger una reserva,"
+                        + "\n para poder utilizar este servicio");
+                actualizarListaServicios();
+            }
+
+        }
+    }
+
+    public void actualizarListaServicios() {
+        fechaModificarReserva_DP.setDisable(false);
+        idSAModificarReserva_CB.setDisable(true);
+        cantiPersonasModificar_TF.setDisable(true);
+        eliminarSA_RB.setSelected(false);
+        fechaModificarReserva_RB.setSelected(true);
     }
 
     @Override
@@ -964,7 +1360,11 @@ public class FXMLDocumentController implements Initializable {
         tablaCliente.getColumns().addAll();
         opciones.getItems().addAll("Nombre", "ID", "Telefono");
         //Reservas
-        newTipoVehiculo_CB.getItems().addAll(TipoTransporte.MINIVAN,TipoTransporte.PARTICULAR,TipoTransporte.TAXI);
+        fillItemsReserva();
+        newTipoVehiculo_CB.getItems().addAll(TipoTransporte.MINIVAN,
+                TipoTransporte.PARTICULAR,
+                TipoTransporte.TAXI);
+
     }
 
 }

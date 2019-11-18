@@ -135,7 +135,7 @@ public class Reserva {
                 + "\n fecha=" + fecha 
                 + "\n pagado=" + pagado 
                 + "\n cantidadPersonas=" + cantidadPersonas + "\n"
-                + "\n numero de servicios adicionales= " + serviciosAdicionales.size()
+                + "\n Servicios Adcionales: " + serviciosAdicionales.toString()
                 + "\n";
     }
         

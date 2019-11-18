@@ -13,20 +13,20 @@ import model.Empresarial;
 import enumeradores.TipoEmpresa;
 
 import model.Tour;
-
+        
 public class GestionTours {
 
 	//METODO PARA CREACION DE TOURS Y LENNARLOS AUTOMATICAMENTE
 	public HashMap <Integer,Tour> crearTour(){
             
-            try {
+            try {        boolean pagado = false;
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 
                 Date fechaSalida1 = sdf.parse("2019-01-01");
                 Date fechaLlegada1 = sdf.parse("2019-01-05");
                 Date fechaSalida2 = sdf.parse("2019-01-06");
                 Date fechaLlegada2 = sdf.parse("2019-01-15");
-                Date fechaSalida3 = sdf.parse("2019-02-01");
+                Date fechaSalida3 = sdf.parse("2019-02-01");       
                 Date fechaLlegada3 = sdf.parse("2019-02-05");
                 Date fechaSalida4 = sdf.parse("2019-03-01");
                 Date fechaLlegada4 = sdf.parse("2019-03-05");

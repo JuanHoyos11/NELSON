@@ -42,7 +42,7 @@ public class ControlAgencia {
     private HashMap<Integer, Cliente> listaClientes = new HashMap<Integer, Cliente>();
     private ArrayList<ServicioAdicional> carrosParticularesXML = new ArrayList<>();
     double precioXML;
-    
+
     public HashMap<Integer, Tour> getListaToursEcologicosXML() {
         return listaToursEcologicosXML;
     }
@@ -60,7 +60,7 @@ public class ControlAgencia {
     }
 
     //GETTERS AND SETTERS
-    public double getPrecioXML() {    
+    public double getPrecioXML() {
         return precioXML;
     }
 
@@ -165,6 +165,19 @@ public class ControlAgencia {
         return false;
     }
 
+    public long getNumeroDeReserva(LocalDateTime fecha, long codigoCliente, long codigoTour) {
+        for (Reserva res : reservas) {
+            if (res.getClienteReserva().equals(listaClientes.get((int) codigoCliente))
+                    && res.getTourReservado().equals(listaTours.get((int) codigoTour))
+                    && res.getFecha().equals(fecha)) {
+                return res.getNumeroReserva();
+            }
+
+        }
+
+        return -1;
+    }
+
     public int existeReserva(long reserva) {
         for (Reserva res : reservas) {
             if (res.getNumeroReserva() == reserva) {
@@ -192,25 +205,21 @@ public class ControlAgencia {
     }
 
     public void quemarReservas() {
-        
-        
-        
+
         agregarReserva(LocalDateTime.of(2019, 12, 12, 0, 0), true, 2, listaTours.get(1000001), listaClientes.get(10001));
-        agregarReserva(LocalDateTime.of(2019,12,12,0, 0), true, 2, listaTours.get(1000002), listaClientes.get(20002));
-        agregarReserva(LocalDateTime.of(2019,10,12,0, 0), true, 2, listaTours.get(2001), listaClientes.get(20002));
-        agregarReserva(LocalDateTime.of(2019,12,12,0, 0), true, 2, listaTours.get(3001), listaClientes.get(20002));
-        ServicioAdicional x =new Transporte(100, TipoTransporte.PARTICULAR, 2,3,"x particular",13);
-        ServicioAdicional y =new Transporte(100, TipoTransporte.PARTICULAR, 4,5,"y particular",12);
-        ServicioAdicional z =new Transporte(100, TipoTransporte.TAXI, 0, 0, "taxi", 0);
-        ArrayList <ServicioAdicional> se = new ArrayList<>();
+        agregarReserva(LocalDateTime.of(2019, 12, 12, 0, 0), true, 2, listaTours.get(1000002), listaClientes.get(20002));
+        agregarReserva(LocalDateTime.of(2019, 10, 12, 0, 0), true, 2, listaTours.get(2001), listaClientes.get(20002));
+        agregarReserva(LocalDateTime.of(2019, 12, 12, 0, 0), true, 2, listaTours.get(3001), listaClientes.get(20002));
+        ServicioAdicional x = new Transporte(100, TipoTransporte.PARTICULAR, 2, 3, "x particular", 13);
+        ServicioAdicional y = new Transporte(100, TipoTransporte.PARTICULAR, 4, 5, "y particular", 12);
+        ServicioAdicional z = new Transporte(100, TipoTransporte.TAXI, 0, 0, "taxi", 0);
+        ArrayList<ServicioAdicional> se = new ArrayList<>();
         se.add(x);
         se.add(y);
         se.add(z);
-        for(Reserva res : reservas){
-           res.setServiciosAdicionales(se);
+        for (Reserva res : reservas) {
+            res.setServiciosAdicionales(se);
         }
-       
-       
 
     }
 
@@ -436,12 +445,13 @@ public class ControlAgencia {
         return total;
 
     }
-    public ArrayList<ServicioAdicional> getListaDeCarrosParticulares(){
+
+    public ArrayList<ServicioAdicional> getListaDeCarrosParticulares() {
         ArrayList<ServicioAdicional> carrosParticulares = new ArrayList<>();
         ArrayList<ServicioAdicional> listaFinal = new ArrayList<>();
-        for(Reserva res : reservas){
-           carrosParticulares = res.retornarServiciosAdicionalesTransporteParticular();
-           listaFinal.addAll(carrosParticulares);
+        for (Reserva res : reservas) {
+            carrosParticulares = res.retornarServiciosAdicionalesTransporteParticular();
+            listaFinal.addAll(carrosParticulares);
         }
         return listaFinal;
     }
@@ -449,7 +459,7 @@ public class ControlAgencia {
 
     public boolean crearListaReservaXML(File selectedFile) {
 
-        quemarReservas();
+        //quemarReservas();
         ArchivosXMLListaReservas registros;
         registros = new ArchivosXMLListaReservas(this.reservas);
         try (BufferedWriter output
@@ -461,6 +471,7 @@ public class ControlAgencia {
             return false;
         }
     }
+
     public boolean crearFechaEspecificaXML(File selectedFile, long codigo, LocalDateTime Fecha) {
         reservasFechaEspecifica.clear();
         listarReservasUnTour(codigo, Fecha);
@@ -469,13 +480,14 @@ public class ControlAgencia {
         try (BufferedWriter output
                 = Files.newBufferedWriter(Paths.get(selectedFile.getAbsolutePath()))) {
             JAXB.marshal(registros, output);
-            
+
             return true;
 
         } catch (Exception e) {
-             return false;
+            return false;
         }
     }
+
     public boolean crearTourEcologicoXML(File selectedFile) {
         listaToursEcologicosXML.clear();
         listaToursEcologicosXML = retornarEcologicos();
@@ -483,13 +495,14 @@ public class ControlAgencia {
         registros = new TourEcologicoXML(this.listaToursEcologicosXML);
         try (BufferedWriter output
                 = Files.newBufferedWriter(Paths.get(selectedFile.getAbsolutePath()))) {
-            JAXB.marshal(registros, output);     
+            JAXB.marshal(registros, output);
             return true;
 
         } catch (Exception e) {
-             return false;
+            return false;
         }
     }
+
     public boolean crearTourEmpresarialXML(File selectedFile) {
         reservasTourEmpresarial.clear();
         reservasTourEmpresarial = filtrarAsociadasEmpresarial();
@@ -498,45 +511,45 @@ public class ControlAgencia {
         try (BufferedWriter output
                 = Files.newBufferedWriter(Paths.get(selectedFile.getAbsolutePath()))) {
             JAXB.marshal(registros, output);
-            
+
             return true;
 
         } catch (Exception e) {
-             return false;
+            return false;
         }
     }
-    public boolean crearTourPrecioXML(File selectedFile,Date fechaInicial, Date fechaFinal) {
-        
+
+    public boolean crearTourPrecioXML(File selectedFile, Date fechaInicial, Date fechaFinal) {
+
         precioXML = precioReservasToursEcologicosPorFecha(fechaInicial, fechaFinal);
         PrecioTourEcologicoXML registros;
         registros = new PrecioTourEcologicoXML(precioXML);
         try (BufferedWriter output
                 = Files.newBufferedWriter(Paths.get(selectedFile.getAbsolutePath()))) {
             JAXB.marshal(registros, output);
-            
+
             return true;
 
         } catch (Exception e) {
-             return false;
+            return false;
         }
     }
-     public boolean crearTransporteCarroParticularXML(File selectedFile) {
-        
-         
-        
+
+    public boolean crearTransporteCarroParticularXML(File selectedFile) {
+
         carrosParticularesXML = getListaDeCarrosParticulares();
         TransporteCarroParticularXML registros;
-        
+
         registros = new TransporteCarroParticularXML(carrosParticularesXML);
         try (BufferedWriter output
                 = Files.newBufferedWriter(Paths.get(selectedFile.getAbsolutePath()))) {
             JAXB.marshal(registros, output);
-            
+
             return true;
 
         } catch (Exception e) {
-             return false;
+            return false;
         }
     }
-    
+
 }
