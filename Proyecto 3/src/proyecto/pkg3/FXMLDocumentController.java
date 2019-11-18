@@ -41,6 +41,8 @@ import model.Empresarial;
 import model.Reserva;
 import model.ServicioAdicional;
 import enumeradores.TipoEmpresa;
+import enumeradores.TipoTransporte;
+import javafx.scene.control.Spinner;
 import model.Tour;
 import view.PantallaAgencia;
 
@@ -198,11 +200,143 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private DatePicker fechaReserva_DP_XML;
+    //==========================================================================
+    @FXML
+    private TableView<Cliente> tablaCliente;
+
+    @FXML
+    private TableColumn<Cliente, String> nombreColumnaCliente = new TableColumn<Cliente, String>("NombreCompleto");
+
+    @FXML
+    private TableColumn<Cliente, Integer> cedulaColumnasCliente = new TableColumn<Cliente, Integer>("NumeroIdentificacion");
+
+    @FXML
+    private TableColumn<Cliente, String> columnaTelefonoCliente = new TableColumn<Cliente, String>("TelefonoContacto");
+
+    @FXML
+    private TextField newNombreCliente;
+
+    @FXML
+    private TextField newCedulaCliente;
+
+    @FXML
+    private TextField newTelefonoCliente;
+
+    @FXML
+    private Button agregarBtnCliente;
+
+    @FXML
+    private ChoiceBox<Long> listaClientes;
+
+    @FXML
+    private TextField cedulaField;
+
+    @FXML
+    private TextField telefonoField;
+
+    @FXML
+    private Button borrarCliente;
+
+    @FXML
+    private ChoiceBox<Long> lista2Cliente;
+
+    @FXML
+    private RadioButton pModificar;
+
+    @FXML
+    private Button modificarCliente;
+
+    @FXML
+    private TextField nombreField;
+
+    @FXML
+    private ChoiceBox<String> opciones;
+
+    @FXML
+    private TextField nuevaInfoCliente;
+
+    @FXML
+    private CheckBox eliminar_CB_cliente;
+    //===============================================
+    @FXML
+    private TextField codigoTour_Reserva_Button;
+
+    @FXML
+    private TextField codigoCliente_Reserva_Tour;
+
+    @FXML
+    private DatePicker newFechaReserva_DatePicker_r;
+
+    @FXML
+    private RadioButton si_pagarTourReserva_RB;
+
+    @FXML
+    private RadioButton no_pagarTourReserva_RB;
+
+    @FXML//borrar
+    private ToggleGroup grupoReservarTour;
+
+    @FXML
+    private ToggleGroup grupoPagar;
+
+    @FXML
+    private ToggleGroup grupoConcierto;
+
+    @FXML
+    private ToggleGroup grupoTransporte;
+
+    @FXML
+    private TextField newcantidadPersonas_reservas_TF;
+
+    @FXML
+    private RadioButton si_agregarConciertoReserva_RB;
+
+    @FXML
+    private RadioButton no_agregarConciertoReserva_RB;
+
+    @FXML
+    private RadioButton siAgregarTransporteReserva_RB;
+
+    @FXML
+    private RadioButton noAgregarTransporteReserva_RB;
+
+    @FXML
+    private TextField newCodigoServicio_TF;
+
+    @FXML
+    private TextField newNombreSevicio_TF;
+
+    @FXML
+    private TextField newPrecioServicio_TF;
+
+    @FXML
+    private TextField newNombreArtista_TF;
+
+    @FXML
+    private TextField newNombreLugar_TF;
+
+    @FXML
+    private TextField newHoraIngresoReservas_TF;
+
+    @FXML
+    private TextField newDistanciaReserva_TF;
+
+    @FXML
+    private TextField newNumeroDePasajeros_TF;
+
+    @FXML
+    private ChoiceBox<TipoTransporte> newTipoVehiculo_CB;
+
+    @FXML
+    private Button agregarBotonReserva;
+
+    @FXML
+    private Spinner<Integer> cantidadPasajeros_Spinner = new Spinner<Integer>();
 
     @FXML
     private void fillItemsTour() {
         for (Tour tour : controlador.getListaTours().values()) {
-            //Llenar la tabla
+            //Llenar la tablaCliente
             tablaTours.getItems().add(tour);
 
             //llenar el choicebox
@@ -260,7 +394,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void clearItemsTour() {
-        //Clear tabla
+        //Clear tablaCliente
         tablaTours.getItems().clear();
         //Clear choice box
         eliminar_ChoiceBox.getItems().clear();
@@ -654,8 +788,169 @@ public class FXMLDocumentController implements Initializable {
         alert.showAndWait();
     }
 
+    //===========================Ventana Cliente===================================================
+    @FXML
+    void agregarNuevoCliente(ActionEvent event) throws Exception {
+
+        long num = Long.valueOf(newCedulaCliente.getText());
+
+        Cliente cln = new Cliente(num, newNombreCliente.getText(), newTelefonoCliente.getText());
+        if (controlador.getGestionCliente().getCliente(num, controlador.getListaClientes()) == null) {
+            controlador.getGestionCliente().insertarCliente(cln, controlador.getListaClientes());
+
+            crearAlerta(AlertType.CONFIRMATION,
+                    "EXITO!",
+                    "El cliente ha sido agregado correctamente",
+                    "En el sistema hay " + controlador.getListaClientes().size() + " clientes.");
+            clearItemsClientes();
+            fillItemsClientes();
+        } else {
+            crearAlerta(AlertType.ERROR,
+                    "ERROR!",
+                    "Error de al agregar un nuevo Cliente:",
+                    "El cliente ya existe.");
+        }
+    }
+
+    private void fillItemsClientes() {
+        for (Cliente cln : controlador.getListaClientes().values()) {
+
+            //Llenar la tablaCliente
+            tablaCliente.getItems().add(cln);
+            listaClientes.getItems().add(cln.getNumeroIdentificacion());
+            lista2Cliente.getItems().add(cln.getNumeroIdentificacion());
+
+        }
+    }
+
+    @FXML
+    void borrarCliente(ActionEvent event) {
+        Long cedulaBorrar = listaClientes.getValue();
+        Cliente cln = controlador.getGestionCliente().getCliente(cedulaBorrar, controlador.getListaClientes());
+        if (!controlador.clienteTieneReserva(cedulaBorrar)) {
+            if (eliminar_CB_cliente.isSelected()) {
+                crearAlerta(AlertType.CONFIRMATION,
+                        "EXITO!",
+                        "Se ha eliminado con exitro",
+                        ":)");
+                controlador.getGestionCliente().eliminarCliente(controlador.getListaClientes(), cln);
+            } else {
+                crearAlerta(AlertType.ERROR,
+                        "ERROR",
+                        "No se ha eliminado el tour",
+                        "-Tiene que confirmar la eliminacion");
+            }
+        } else {
+
+            crearAlerta(AlertType.ERROR,
+                    "ERROR",
+                    "No se ha elimindo",
+                    "-El tour tiene una reserva asosiada");
+        }
+
+        clearItemsClientes();
+        fillItemsClientes();
+    }
+
+    private void clearItemsClientes() {
+
+        tablaCliente.getItems().clear();
+        listaClientes.getItems().clear();
+        lista2Cliente.getItems().clear();
+    }
+
+    @FXML
+    void modificarCliente(ActionEvent event) {
+
+        boolean error = false;
+        Long cedulaMod = lista2Cliente.getValue();
+        Cliente cln = controlador.getGestionCliente().getCliente(cedulaMod, controlador.getListaClientes());
+        long t = cln.getNumeroIdentificacion();
+
+        if (opciones.getValue().contains("Telefono")) {
+            cln.setTelefonoContacto(nuevaInfoCliente.getText());
+        } else if (opciones.getValue().contains("Nombre")) {
+            cln.setNombreCompleto(nuevaInfoCliente.getText());
+        } else if (opciones.getValue().contains("ID")) {
+
+            long num = Long.valueOf(nuevaInfoCliente.getText());
+            Cliente tempo = controlador.getGestionCliente().getCliente(num, controlador.getListaClientes());
+            if (tempo != null) {
+                error = true;
+                crearAlerta(AlertType.ERROR,
+                        "ERROR",
+                        "No se pudo modificar",
+                        "Esa identificacion ya existe");
+            } else {
+                cln.setNumeroIdentificacion(num);
+            }
+
+        }
+        if (!error) {
+            crearAlerta(AlertType.CONFIRMATION,
+                    "EXITO!",
+                    "SE HA MODIFICADO!",
+                    ":)");
+            controlador.getGestionCliente().modificarCliente(controlador.getListaClientes(), cln, t);
+        }
+        clearItemsClientes();
+        fillItemsClientes();
+    }
+//=================================Reservas================================================
+
+    @FXML
+    void crearReserva() {
+        Boolean pago = false;
+        Long codigoTour = null, id = null, nummeroReserva = null;
+        Long codServ = null;
+        String nombreServ = null, artista = null, lugar = null;
+        String horaIngreso = null, tipoCadena = null;
+        Double precio = null, distancia = null;
+        int numeroPasajeros = 0;
+        int cantiPersona = 0;
+        boolean pagado = false;
+        TipoTransporte tipo;
+        LocalDateTime fechaReserva = null;
+        Tour tour = new Tour();
+        Cliente cliente = new Cliente();
+
+        try {
+            codigoTour = Long.parseLong(codigoTour_Reserva_Button.getText());
+            id = Long.parseLong(codigoCliente_Reserva_Tour.getText());
+            fechaReserva = newFechaReserva_DatePicker_r.getValue().atStartOfDay();
+            if (grupoReservarTour.equals(si_pagarTourReserva_RB)) {
+                pago = true;
+            }
+            cantiPersona = Integer.parseInt(newcantidadPersonas_reservas_TF.getText());
+
+        } catch (Exception e) {
+            //crear alerta error
+        }
+        tour = controlador.getGestionTours().getTour(controlador.getListaTours(), codigoTour);
+        cliente = controlador.getGestionCliente().getCliente(id, controlador.getListaClientes());
+        if (cliente != null && tour != null) {
+            if (controlador.existeReserva(fechaReserva, id, codigoTour)
+                    || controlador.reservaMenorADosDias(fechaReserva)) {
+                //error ya existe la reserva o la reserva no es menor a dos dias
+            } else {
+                controlador.agregarReserva(fechaReserva, true, cantiPersona, tour, cliente);
+            }
+            try {
+
+            } catch (Exception e) {
+
+            }
+            if (grupoConcierto.getSelectedToggle().equals(si_agregarConciertoReserva_RB)) {
+
+            }
+        } else {
+            //crear alerta ya existe tour y/o cliente
+        }
+    }
+
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb
+    ) {
         // TODO
         fillItemsTour();
         modificarValor_CHECKBOX.getItems().addAll("Nombre", "ID",
@@ -664,5 +959,12 @@ public class FXMLDocumentController implements Initializable {
                 "Tipo de tour", "Hora de partida");
 
         tablaTours.getColumns().addAll(columnaNombre, columnaID, columnaPartida, columnaPartida, columnaPrecio);
+        //Clientes
+        fillItemsClientes();
+        tablaCliente.getColumns().addAll();
+        opciones.getItems().addAll("Nombre", "ID", "Telefono");
+        //Reservas
+        newTipoVehiculo_CB.getItems().addAll(TipoTransporte.MINIVAN,TipoTransporte.PARTICULAR,TipoTransporte.TAXI);
     }
+
 }
